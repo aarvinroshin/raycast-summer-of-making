@@ -3,16 +3,8 @@
 	"author": "aarvinroshin",
 	"commands": [
 		{
-			"arguments": [
-				{
-					"name": "cookie",
-					"placeholder": "Cookie",
-					"required": true,
-					"type": "text"
-				}
-			],
 			"description": "Set request header cookie",
-			"mode": "no-view",
+			"mode": "view",
 			"name": "cookie",
 			"title": "Cookie"
 		}

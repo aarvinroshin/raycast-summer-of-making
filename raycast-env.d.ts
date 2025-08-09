@@ -19,9 +19,6 @@ declare namespace Preferences {
 
 declare namespace Arguments {
   /** Arguments passed to the `cookie` command */
-  export type Cookie = {
-  /** Cookie */
-  "cookie": string
-}
+  export type Cookie = {}
 }
 
