@@ -1,56 +1,27 @@
-import { Action, ActionPanel, Form, LocalStorage as Storage, showToast, Toast } from "@raycast/api";
-import { FormValidation as Validation, useForm } from "@raycast/utils";
+import { Action, ActionPanel, Form, LocalStorage as Storage } from "@raycast/api";
 import { useEffect } from "react";
+import { useCookie } from "./hooks/useCookie";
 
-interface CookieFormValues {
-	cookie: string;
-}
-
-export default function Command() {
-	const { handleSubmit, itemProps, setValue } = useForm<CookieFormValues>({
-		initialValues: { cookie: "" },
-		async onSubmit(values) {
-			const toast = await showToast({
-				style: Toast.Style.Animated,
-				title: "Saving cookie...",
-			});
-
-			try {
-				await Storage.setItem("cookie", values.cookie);
-
-				toast.style = Toast.Style.Success;
-				toast.title = "Cookie saved";
-			} catch (err) {
-				toast.style = Toast.Style.Failure;
-				toast.title = "Failed to save cookie";
-
-				if (err instanceof Error) {
-					toast.message = err.message;
-				}
-			}
-		},
-		validation: {
-			cookie: Validation.Required,
-		},
-	});
-
+const cookie = () => {
+	const { cookie, set, submit } = useCookie();
 	useEffect(() => {
 		(async () => {
 			const existing = await Storage.getItem<string>("cookie");
 			if (!existing) return;
-			setValue("cookie", existing);
+			set("cookie", existing);
 		})();
-	}, [setValue]);
-
+	}, [set]);
 	return (
 		<Form
 			actions={
 				<ActionPanel>
-					<Action.SubmitForm title="Save Cookie" onSubmit={handleSubmit} />
+					<Action.SubmitForm title="Save Cookie" onSubmit={submit} />
 				</ActionPanel>
 			}
 		>
-			<Form.TextArea title="Cookie" placeholder="Enter your cookie value" {...itemProps.cookie} />
+			<Form.TextArea title="Cookie" placeholder="Enter your cookie value" {...cookie} />
 		</Form>
 	);
-}
+};
+
+export default cookie;

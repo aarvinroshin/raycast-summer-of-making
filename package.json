@@ -7,6 +7,12 @@
 			"mode": "view",
 			"name": "cookie",
 			"title": "Cookie"
+		},
+		{
+			"description": "See projects",
+			"mode": "view",
+			"name": "projects",
+			"title": "Projects"
 		}
 	],
 	"dependencies": {
