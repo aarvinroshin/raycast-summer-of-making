@@ -13,12 +13,15 @@ type ExtensionPreferences = {}
 declare type Preferences = ExtensionPreferences
 
 declare namespace Preferences {
-  /** Preferences accessible in the `foo` command */
-  export type Foo = ExtensionPreferences & {}
+  /** Preferences accessible in the `cookie` command */
+  export type Cookie = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
-  /** Arguments passed to the `foo` command */
-  export type Foo = {}
+  /** Arguments passed to the `cookie` command */
+  export type Cookie = {
+  /** Cookie */
+  "cookie": string
+}
 }
 

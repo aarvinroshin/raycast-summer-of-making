@@ -1,19 +1,27 @@
 {
 	"$schema": "https://www.raycast.com/schemas/extension.json",
-	"author": "aarvin",
+	"author": "aarvinroshin",
 	"commands": [
 		{
-			"description": "foo bar baz qux",
-			"mode": "view",
-			"name": "foo",
-			"title": "foo"
+			"arguments": [
+				{
+					"name": "cookie",
+					"placeholder": "Cookie",
+					"required": true,
+					"type": "text"
+				}
+			],
+			"description": "Set request header cookie",
+			"mode": "no-view",
+			"name": "cookie",
+			"title": "Cookie"
 		}
 	],
 	"dependencies": {
 		"@raycast/api": "^1.102.3",
 		"@raycast/utils": "^2.2.0"
 	},
-	"description": "raycast summer of making extension",
+	"description": "Raycast Summer of Making extension",
 	"devDependencies": {
 		"@types/node": "^24.2.1",
 		"@types/react": "^19.1.9",
