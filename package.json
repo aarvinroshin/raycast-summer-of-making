@@ -1,5 +1,32 @@
 {
+	"$schema": "https://www.raycast.com/schemas/extension.json",
+	"author": "aarvin",
+	"commands": [
+		{
+			"description": "foo bar baz qux",
+			"mode": "view",
+			"name": "foo",
+			"title": "foo"
+		}
+	],
+	"dependencies": {
+		"@raycast/api": "^1.102.3",
+		"@raycast/utils": "^2.2.0"
+	},
+	"description": "raycast summer of making extension",
 	"devDependencies": {
-		"dprint": "^0.50.1"
-	}
+		"@types/node": "^24.2.1",
+		"@types/react": "^19.1.9",
+		"dprint": "^0.50.1",
+		"typescript": "^5.9.2"
+	},
+	"icon": "favicon.png",
+	"license": "MIT",
+	"name": "summer-of-making",
+	"scripts": {
+		"build": "ray build",
+		"dev": "ray develop",
+		"publish": "@raycast/api publish"
+	},
+	"title": "Summer of Making"
 }
