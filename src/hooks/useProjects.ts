@@ -1,6 +1,5 @@
 import { LocalStorage as Storage } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
-import { useRef } from "react";
 
 type Follower = {
 	id: number;
@@ -28,7 +27,6 @@ type Project = {
 	y: null | number;
 };
 export const useProjects = () => {
-	const pages = useRef<number | null>(null);
 	const { isLoading, data, pagination } = usePromise(
 		() =>
 		async (options: { page: number }): Promise<{
@@ -37,32 +35,14 @@ export const useProjects = () => {
 		}> => {
 			const cookie = await Storage.getItem("cookie");
 
-			if (pages.current == null) {
-				const first = await fetch(
-					`https://summer.hackclub.com/api/v1/projects?page=1`,
-					{
-						headers: {
-							Cookie: cookie as string,
-						},
-					},
-				);
-				const { pagination } = (await first.json()) as {
-					pagination: { pages: number };
-				};
-				pages.current = pagination.pages;
-			}
+			const target = Math.max(0, options.page);
 
-			const target = pages.current - options.page;
-			if (target < 1) {
-				return { data: [], hasMore: false };
-			}
-
-			const response = await fetch(`https://summer.hackclub.com/api/v1/projects?page=${target}`, {
+			const response = await fetch(`https://summer.hackclub.com/api/v1/projects?page=${target + 1}`, {
 				headers: {
 					Cookie: cookie as string,
 				},
 			});
-			const { projects } = (await response.json()) as {
+			const { projects, pagination: info } = (await response.json()) as {
 				pagination: {
 					count?: number;
 					items?: number;
@@ -71,10 +51,9 @@ export const useProjects = () => {
 				};
 				projects: readonly Project[];
 			};
-			const reversed = [...projects].reverse() as Project[];
 			return {
-				data: reversed,
-				hasMore: target > 1,
+				data: projects as Project[],
+				hasMore: info.page < info.pages,
 			};
 		},
 	);
