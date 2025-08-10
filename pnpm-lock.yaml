@@ -370,8 +370,8 @@ packages:
     resolution: {integrity: sha512-LrmMdo9EMJciOvF8UurdoTcTMymv5npKtxMAyonZvhSvGR8YwCKnuHIh00+SO2mNtGOYam7f4xHnUmj2qmanyA==}
     engines: {node: '>=18.0.0'}
 
-  '@oclif/plugin-not-found@3.2.63':
-    resolution: {integrity: sha512-xW+I6czUGqaeocVt1+brUKzXvL85mBTKdmJGlsB8pl9qUL3PJoIBIIDhbleR499T0jR+j1hpy8yWSCrs54icMQ==}
+  '@oclif/plugin-not-found@3.2.64':
+    resolution: {integrity: sha512-WDCPkFw5Qi9ALVODnGWdFDcm49iBOg7G2/u1C/o/KB4eSxlQn0JEDhLaMGcLmwOYKQnQdI9x35K77vhR1JrwDg==}
     engines: {node: '>=18.0.0'}
 
   '@raycast/api@1.102.3':
@@ -893,7 +893,7 @@ snapshots:
     dependencies:
       '@oclif/core': 4.5.2
 
-  '@oclif/plugin-not-found@3.2.63(@types/node@24.2.1)':
+  '@oclif/plugin-not-found@3.2.64(@types/node@24.2.1)':
     dependencies:
       '@inquirer/prompts': 7.8.1(@types/node@24.2.1)
       '@oclif/core': 4.5.2
@@ -907,7 +907,7 @@ snapshots:
       '@oclif/core': 4.5.2
       '@oclif/plugin-autocomplete': 3.2.34
       '@oclif/plugin-help': 6.2.32
-      '@oclif/plugin-not-found': 3.2.63(@types/node@24.2.1)
+      '@oclif/plugin-not-found': 3.2.64(@types/node@24.2.1)
       esbuild: 0.25.8
       react: 19.0.0
     optionalDependencies:

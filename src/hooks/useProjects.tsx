@@ -7,7 +7,7 @@ type Follower = {
 	name: string;
 };
 type Project = {
-	banner: string;
+	banner: null | string;
 	category: null | string;
 	created_at: string;
 	demo_link: string;
@@ -24,8 +24,8 @@ type Project = {
 	total_seconds_coded: number;
 	updated_at: string;
 	user_id: number;
-	x: number;
-	y: number;
+	x: null | number;
+	y: null | number;
 };
 export const useProjects = () => {
 	const pages = useRef<number | null>(null);
