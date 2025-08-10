@@ -17,6 +17,8 @@ declare namespace Preferences {
   export type Cookie = ExtensionPreferences & {}
   /** Preferences accessible in the `projects` command */
   export type Projects = ExtensionPreferences & {}
+  /** Preferences accessible in the `users` command */
+  export type Users = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
@@ -24,5 +26,7 @@ declare namespace Arguments {
   export type Cookie = {}
   /** Arguments passed to the `projects` command */
   export type Projects = {}
+  /** Arguments passed to the `users` command */
+  export type Users = {}
 }
 

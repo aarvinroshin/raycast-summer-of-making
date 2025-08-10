@@ -9,10 +9,16 @@
 			"title": "Cookie"
 		},
 		{
-			"description": "See projects",
+			"description": "See latest projects",
 			"mode": "view",
 			"name": "projects",
 			"title": "Projects"
+		},
+		{
+			"description": "See newest users",
+			"mode": "view",
+			"name": "users",
+			"title": "Users"
 		}
 	],
 	"dependencies": {
