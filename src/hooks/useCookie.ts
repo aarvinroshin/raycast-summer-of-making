@@ -1,3 +1,5 @@
+import { clearRequestCache, invalidateCookieCache } from "../utils/cache";
+
 import { LocalStorage as Storage, showToast, Toast } from "@raycast/api";
 import { FormValidation as Validation, useForm } from "@raycast/utils";
 
@@ -11,7 +13,12 @@ export const useCookie = () => {
 			});
 
 			try {
-				await Storage.setItem("cookie", values.cookie);
+				const existing = await Storage.getItem<string>("cookie");
+				if (existing !== values.cookie) {
+					await Storage.setItem("cookie", values.cookie);
+					invalidateCookieCache();
+					clearRequestCache();
+				}
 
 				toast.style = Toast.Style.Success;
 				toast.title = "Cookie saved";

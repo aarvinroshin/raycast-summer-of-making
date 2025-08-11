@@ -5,11 +5,15 @@ import { useCookie } from "./hooks/useCookie";
 const cookie = () => {
 	const { cookie, set, submit } = useCookie();
 	useEffect(() => {
+		let cancelled = false;
 		(async () => {
 			const existing = await Storage.getItem<string>("cookie");
-			if (!existing) return;
+			if (!existing || cancelled) return;
 			set("cookie", existing);
 		})();
+		return () => {
+			cancelled = true;
+		};
 	}, [set]);
 	return (
 		<Form

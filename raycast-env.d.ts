@@ -15,18 +15,26 @@ declare type Preferences = ExtensionPreferences
 declare namespace Preferences {
   /** Preferences accessible in the `cookie` command */
   export type Cookie = ExtensionPreferences & {}
+  /** Preferences accessible in the `devlogs` command */
+  export type Devlogs = ExtensionPreferences & {}
   /** Preferences accessible in the `projects` command */
   export type Projects = ExtensionPreferences & {}
   /** Preferences accessible in the `users` command */
   export type Users = ExtensionPreferences & {}
+  /** Preferences accessible in the `clear-cache` command */
+  export type ClearCache = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
   /** Arguments passed to the `cookie` command */
   export type Cookie = {}
+  /** Arguments passed to the `devlogs` command */
+  export type Devlogs = {}
   /** Arguments passed to the `projects` command */
   export type Projects = {}
   /** Arguments passed to the `users` command */
   export type Users = {}
+  /** Arguments passed to the `clear-cache` command */
+  export type ClearCache = {}
 }
 

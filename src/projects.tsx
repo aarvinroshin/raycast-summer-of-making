@@ -3,31 +3,9 @@ import { useTime } from "./hooks/useTime";
 import { useUser } from "./hooks/useUser";
 
 import { Action, ActionPanel, Icon, Image, List } from "@raycast/api";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-const projects = () => {
-	const { loading, projects, pagination } = useProjects();
-
-	const [detail, setDetail] = useState(false);
-
-	return (
-		<List isLoading={loading} isShowingDetail={detail} pagination={pagination}>
-			{projects?.map((p) => (
-				<ProjectItem
-					key={`${p.id}`}
-					detail={detail}
-					onToggleDetail={() => setDetail(!detail)}
-					project={p as any}
-				/>
-			))}
-		</List>
-	);
-};
-
-export default projects;
-
-type ProjectItemProps = {
-	detail: boolean;
+type Project = {
 	onToggleDetail: () => void;
 	project: {
 		id: number;
@@ -47,8 +25,7 @@ type ProjectItemProps = {
 		user_id: number;
 	};
 };
-
-const ProjectItem = ({ detail, onToggleDetail, project }: ProjectItemProps) => {
+const Project = ({ onToggleDetail, project }: Project) => {
 	const {
 		banner,
 		category,
@@ -66,13 +43,10 @@ const ProjectItem = ({ detail, onToggleDetail, project }: ProjectItemProps) => {
 		total_seconds_coded: time,
 		user_id,
 	} = project;
-
 	const subtitle = description && description.length > 69
 		? `${description.slice(0, 68).trimEnd()}…`
 		: description;
-
 	const creator = useUser(user_id, slack_id);
-
 	return (
 		<List.Item
 			accessories={[
@@ -148,3 +122,21 @@ const ProjectItem = ({ detail, onToggleDetail, project }: ProjectItemProps) => {
 		/>
 	);
 };
+const projects = () => {
+	const { loading, projects, pagination } = useProjects();
+
+	const [detail, setDetail] = useState(false);
+	const toggleDetail = useCallback(() => setDetail((d) => !d), []);
+	const items = useMemo(
+		() => projects?.map((p) => <Project key={`${p.id}`} onToggleDetail={toggleDetail} project={p as any} />),
+		[projects, toggleDetail],
+	);
+
+	return (
+		<List isLoading={loading} isShowingDetail={detail} pagination={pagination}>
+			{items}
+		</List>
+	);
+};
+
+export default projects;

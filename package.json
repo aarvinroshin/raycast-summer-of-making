@@ -9,6 +9,12 @@
 			"title": "Cookie"
 		},
 		{
+			"description": "See recent devlogs",
+			"mode": "view",
+			"name": "devlogs",
+			"title": "Devlogs"
+		},
+		{
 			"description": "See latest projects",
 			"mode": "view",
 			"name": "projects",
@@ -19,6 +25,12 @@
 			"mode": "view",
 			"name": "users",
 			"title": "Users"
+		},
+		{
+			"description": "Clear in-memory and persisted caches (keeps cookie)",
+			"mode": "no-view",
+			"name": "clear-cache",
+			"title": "Clear Cache"
 		}
 	],
 	"dependencies": {

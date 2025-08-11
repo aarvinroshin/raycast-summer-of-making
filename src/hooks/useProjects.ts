@@ -1,4 +1,5 @@
-import { LocalStorage as Storage } from "@raycast/api";
+import { DEFAULT_LIST_TTL, fetchJSONCached, getCookieCached, getListPage, setListPage } from "../utils/cache";
+
 import { usePromise } from "@raycast/utils";
 
 type Follower = {
@@ -33,28 +34,56 @@ export const useProjects = () => {
 			data: Project[];
 			hasMore: boolean;
 		}> => {
-			const cookie = await Storage.getItem("cookie");
+			const cookie = await getCookieCached();
 
 			const target = Math.max(0, options.page);
 
-			const response = await fetch(`https://summer.hackclub.com/api/v1/projects?page=${target + 1}`, {
-				headers: {
-					Cookie: cookie as string,
-				},
-			});
-			const { projects, pagination: info } = (await response.json()) as {
+			const cached = await getListPage<Project>("projects", target);
+			if (cached) {
+				if (cached.hasMore) {
+					const next = target + 1;
+					fetchJSONCached<{ projects: readonly Project[]; pagination: any }>(
+						`https://summer.hackclub.com/api/v1/projects?page=${next + 1}`,
+						{ headers: { Cookie: (cookie ?? "") as string } },
+						30_000,
+					).then(({ projects, pagination }) => {
+						const hasMore = (pagination?.page ?? next + 1) < (pagination?.pages ?? next + 1);
+						setListPage("projects", next, { data: projects as Project[], hasMore }, DEFAULT_LIST_TTL).catch(() => {});
+					}).catch(() => {});
+				}
+				return cached;
+			}
+
+			const { projects, pagination: info } = await fetchJSONCached<{ projects: readonly Project[]; pagination: any }>(
+				`https://summer.hackclub.com/api/v1/projects?page=${target + 1}`,
+				{ headers: { Cookie: (cookie ?? "") as string } },
+				30_000,
+			);
+			const pageInfo = info as {
 				pagination: {
 					count?: number;
 					items?: number;
 					page: number;
 					pages: number;
 				};
-				projects: readonly Project[];
-			};
-			return {
+			}["pagination"];
+			const result = {
 				data: projects as Project[],
-				hasMore: info.page < info.pages,
+				hasMore: pageInfo.page < pageInfo.pages,
 			};
+			setListPage("projects", target, result, DEFAULT_LIST_TTL).catch(() => {});
+			if (result.hasMore) {
+				const next = target + 1;
+				fetchJSONCached<{ projects: readonly Project[]; pagination: any }>(
+					`https://summer.hackclub.com/api/v1/projects?page=${next + 1}`,
+					{ headers: { Cookie: (cookie ?? "") as string } },
+					30_000,
+				).then(({ projects, pagination }) => {
+					const hasMore = (pagination?.page ?? next + 1) < (pagination?.pages ?? next + 1);
+					setListPage("projects", next, { data: projects as Project[], hasMore }, DEFAULT_LIST_TTL).catch(() => {});
+				}).catch(() => {});
+			}
+			return result;
 		},
 	);
 	return {

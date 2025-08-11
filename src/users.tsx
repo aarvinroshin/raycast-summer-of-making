@@ -1,11 +1,12 @@
 import { Action, ActionPanel, Icon, Image, List } from "@raycast/api";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useTime } from "./hooks/useTime";
 import { useUsers } from "./hooks/useUsers";
 
 const Users = () => {
 	const { loading, users, pagination } = useUsers();
 	const [detail, setDetail] = useState(false);
+	const toggleDetail = useCallback(() => setDetail((d) => !d), []);
 
 	return (
 		<List isLoading={loading} isShowingDetail={detail} pagination={pagination}>
@@ -41,7 +42,7 @@ const Users = () => {
 							actions={
 								<ActionPanel>
 									<Action.OpenInBrowser url={`https://summer.hackclub.com/users/${id}`} />
-									<Action title="Toggle Detail" onAction={() => setDetail(!detail)} />
+									<Action title="Toggle Detail" onAction={toggleDetail} />
 								</ActionPanel>
 							}
 							detail={
