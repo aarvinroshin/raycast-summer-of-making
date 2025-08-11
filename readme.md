@@ -21,8 +21,10 @@ after install you'll need your som cookie:
 3. click on the first item ("campfire")
 4. under headers, scroll till request headers
 5. copy the _entire_ cookie
+6. use the "cookie" command in raycast and `ctrl+enter` to save
 
 <img width="2408" height="1502" src="https://github.com/user-attachments/assets/362f60be-f99b-4a4c-80b4-d439681eb89e" />
+<img width="2736" height="1824" src="https://github.com/user-attachments/assets/4cf00fb1-0b14-425f-8694-56f1abe9a496" />
 
 here's an example cookie:
 ```
